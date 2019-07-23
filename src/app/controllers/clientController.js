@@ -30,28 +30,48 @@ module.exports = {
         try {
             const client = await Client.findById(req.params.id);
 
-            res.status(200).json(client);
+            if(client !== null){
+                res.status(200).json(client);
+            } else {
+                res.status(404).json({ message: "Client not exist" });
+            }
         } catch (error) {
-            res.status(404).json({ message: "Client not found" });
+            res.status(404).json({ message: "Invalid id" });
         }        
     },
 
     async update(req, res) {
-        const { name, phone, city, email } = req.body;
+        try {
+            const { name, phone, city, email } = req.body;
+    
+            const client = await Client.findByIdAndUpdate(req.params.id, {
+                name,
+                phone,
+                city,
+                email
+            }, { new: true });
+    
+            if(client !== null){
+                res.json({ message: "Client successfully updated" });
+            } else {
+                res.status(404).json({ message: "Client not exist" });
+            }
 
-        const client = await Client.findByIdAndUpdate(req.params.id, {
-            name,
-            phone,
-            city,
-            email
-        }, { new: true });
-
-        res.json(client);
+        } catch (error) {
+            res.status(404).json({ message: "Invalid id" });
+        }
     },
 
     async delete(req, res) {
-        await Client.findByIdAndRemove(req.params.id);
-
-        res.json({ message: "Client successfully removed" });
+        try{
+            const client = await Client.findByIdAndRemove(req.params.id);
+            if(client !== null){
+                res.json({ message: "Client successfully removed" });
+            } else {
+                res.status(404).json({ message: "Client not exist" });
+            }
+        } catch(error) {
+            res.status(404).json({ message: "Invalid id" });
+        }
     },
 };
