@@ -12,9 +12,9 @@ routes.get('/', (req, res) => {
 
 // Rotas do cliente
 routes.get('/api/client', clientController.index);
-routes.get('/api/client/id', clientController.show);
 routes.post('/api/client', clientController.store);
-routes.put('/api/client', clientController.update);
-routes.delete('/api/client', clientController.delete);
+routes.get('/api/client/:id', clientController.show);
+routes.put('/api/client/:id', clientController.update);
+routes.delete('/api/client/:id', clientController.delete);
 
 module.exports =  routes;
