@@ -4,10 +4,7 @@ const clientController = require('./app/controllers/clientController');
 
 // Rota raiz
 routes.get('/', (req, res) => {
-    res.json({
-        name: 'API - Aula LTP',
-        version: 'v1.0.0'
-    });
+    return './test.html';
 });
 
 // Rotas do cliente
